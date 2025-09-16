@@ -18,7 +18,7 @@ jobs:
     - name: compill unit tests
       run: make test
     - name: run unit tests
-      run: ./main
+      run: ./main --gtest_output=on_failure
     - name: make standart activate function
       run: make 
     - name: run standart activate function
@@ -26,4 +26,9 @@ jobs:
     - name: make bent_identity activate function
       run: make bent_identity
     - name: run bent_identity activate function
+      run: ./main
+      
+    - name: make leaky_relu activate function
+      run: make leaky_relu
+    - name: run leaky_relu activate function
       run: ./main

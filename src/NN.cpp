@@ -95,7 +95,7 @@ void NeuralNetwork::compute_gradients_and_cost(
         // Backpropagation
         const Matrix<double> d3(last_layer - vector_outcome);
         const std::vector<double> ones2(HIDDEN_SIZE + 1, 1);
-        Matrix<double> d2((weights2.transpose() * d3).hadamard(Matrix<double>(hidden_layer)).hadamard(Matrix<double>(ones2 - hidden_layer)));
+        Matrix<double> d2((weights2.transpose() * d3).hadamard(Matrix<double>(leaky_relu_prime(hidden_layer))));
 
         gradient_2 += d3 * Matrix<double>(hidden_layer).transpose();
 
@@ -141,11 +141,7 @@ void NeuralNetwork::compute_gradients_and_cost(
 inline std::vector<double> NeuralNetwork::feed_forward(
         const std::vector<double>& input,
         const Matrix<double>& weights) {
-    #ifdef PERS
-        return bent_identity(weights * input);
-    #else
-        return sigmoid(weights * input);
-    #endif
+    return leaky_relu(weights * input);
 }
 
 Matrix<double> NeuralNetwork::weight_init(double maxWeight, unsigned int rows, unsigned int cols){
@@ -201,6 +197,23 @@ std::vector<double> NeuralNetwork::sigmoid_prime(const std::vector<double>& x) {
     for (unsigned int i = 0; i < result.size(); i++) {
         const double t = exp(x[i]);
         result[i] = t / ((1 + t) * (1 + t));
+    }
+    return result;
+}
+std::vector<double> NeuralNetwork::leaky_relu(const std::vector<double>& x) {
+    std::vector<double> result(x.size());
+    const double alpha = 0.01; // коэффициент "утечки"
+    for (unsigned int i = 0; i < x.size(); i++) {
+        result[i] = (x[i] >= 0) ? x[i] : alpha * x[i];
+    }
+    return result;
+}
+
+std::vector<double> NeuralNetwork::leaky_relu_prime(const std::vector<double>& x) {
+    std::vector<double> result(x.size());
+    const double alpha = 0.01;
+    for (unsigned int i = 0; i < x.size(); i++) {
+        result[i] = (x[i] >= 0) ? 1.0 : alpha;
     }
     return result;
 }
