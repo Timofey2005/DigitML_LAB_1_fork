@@ -1,4 +1,4 @@
-
+ 
 PRIMARY GOALS:
 - Make a function which, given the correct label, returns the "perfect" vector.
   - 5 -> [0, 0, 0, 0, 0, 1, 0, 0, 0, 0]
