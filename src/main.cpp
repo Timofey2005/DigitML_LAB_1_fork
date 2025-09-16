@@ -72,6 +72,31 @@ TEST(FunctionTesting, test_sigmoid_comp) {
   EXPECT_TRUE(n.sigmoid(t1)>n.bent_identity(t1));
 }
 
+TEST(FunctionTesting, test_leaky_relu_positive) {
+    std::vector<double> t = {5.0};
+    EXPECT_DOUBLE_EQ(n.leaky_relu(t)[0], 5.0); //тест 1
+}
+
+TEST(FunctionTesting, test_leaky_relu_negative) {
+    std::vector<double> t = {-3.0};
+    EXPECT_DOUBLE_EQ(n.leaky_relu(t)[0], -0.03); //тест 2
+}
+
+TEST(FunctionTesting, test_leaky_relu_prime_negative) {
+    std::vector<double> t = {-3.0};
+    EXPECT_DOUBLE_EQ(n.leaky_relu_prime(t)[0], 0.01); //тест 3
+}
+
+TEST(FunctionTesting, test_leaky_relu_prime_zero) {
+    std::vector<double> t = {0.0};
+    EXPECT_DOUBLE_EQ(n.leaky_relu_prime(t)[0], 1.0); //тест 4
+}
+
+TEST(FunctionTesting, test_leaky_relu_prime_positive) {
+    std::vector<double> t = {3.0};
+    EXPECT_DOUBLE_EQ(n.leaky_relu_prime(t)[0], 1.0); //тест 5
+}
+
 #endif
 
 int main(int argc, char **argv) {
