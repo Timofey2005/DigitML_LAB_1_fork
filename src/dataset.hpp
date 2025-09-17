@@ -21,6 +21,6 @@ void load_dataset(
         const char *image_file_name,
         const char *label_file_name);
 
-#include "dataset.cpp"
+
 
 #endif
