@@ -48,7 +48,7 @@ public:
                                     Matrix<double>& gradient_2,
                                     double& cost);
 
-    unsigned int compute(const Example& e);
+    unsigned int compute(const Example& e) const;
 
     // Доступные функции активации
     static std::vector<double> sigmoid(const std::vector<double>& x);
