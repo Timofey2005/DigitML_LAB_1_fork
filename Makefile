@@ -23,3 +23,4 @@ all: sigmoid
 debug:
 	g++ $(FLAGS) -DDEBUG $(SRC) -I include -o main
 	./main
+ 
