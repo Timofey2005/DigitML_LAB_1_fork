@@ -144,7 +144,7 @@ Matrix<double> NeuralNetwork::weight_init(double maxWeight,
     return weights;
 }
 
-unsigned int NeuralNetwork::compute(const Example& e) {
+unsigned int NeuralNetwork::compute(const Example& e) const {
     std::vector<double> first_layer(e.data, e.data + INPUT_SIZE);
     first_layer.insert(first_layer.begin(), 1.0);
 
@@ -196,5 +196,8 @@ std::vector<double> NeuralNetwork::leaky_relu(const std::vector<double>& x) {
 std::vector<double> NeuralNetwork::leaky_relu_prime(const std::vector<double>& x) {
     std::vector<double> result(x.size());
     const double alpha = 0.01;
-    for (size_t i = 0; i < x.size(); ++i)
+    for (size_t i = 0; i < x.size(); ++i) {
         result[i] = (x[i] >= 0) ? 1.0 : alpha;
+    }
+    return result;
+}
