@@ -1,4 +1,6 @@
-
+#include "dataset.hpp"
+#include <cstdio>       // для FILE
+#include <stdexcept>    // если бросаешь исключения
 /* TRAINING SET LABEL FILE (train-labels-idx1-ubyte):
 
 [offset] [type]          [value]          [description]
