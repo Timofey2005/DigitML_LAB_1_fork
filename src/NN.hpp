@@ -1,4 +1,3 @@
-
 #ifndef NN_HPP
 #define NN_HPP
 
@@ -9,40 +8,47 @@
 #include "../lib/matrix.h"
 #include "dataset.hpp"
 #include <cmath>
+#include <vector>
 
 class NeuralNetwork {
-    private:
-        Matrix<double> weights1 = Matrix<double>(HIDDEN_SIZE, INPUT_SIZE),
-                       weights2 = Matrix<double>(OUTPUT_SIZE, HIDDEN_SIZE);
+private:
+    Matrix<double> weights1 = Matrix<double>(HIDDEN_SIZE, INPUT_SIZE),
+        weights2 = Matrix<double>(OUTPUT_SIZE, HIDDEN_SIZE);
 
-		Matrix<double> weight_init(double max_weight, unsigned int width, unsigned int height);
+    Matrix<double> weight_init(double max_weight, unsigned int width, unsigned int height);
 
-        std::vector<double> feed_forward(
-                const std::vector<double>& input,
-                const Matrix<double>& weights);
+    std::vector<double> feed_forward(
+        const std::vector<double>& input,
+        const Matrix<double>& weights);
 
-    public:
-        NeuralNetwork();
-        NeuralNetwork(const NeuralNetwork& rhs) = default;
-        virtual ~NeuralNetwork() = default;
+public:
+    NeuralNetwork();
+    NeuralNetwork(const NeuralNetwork& rhs) = default;
+    virtual ~NeuralNetwork() = default;
 
-        void train(
-                const unsigned int iterations,
-                const Matrix<unsigned char>& images,
-                const Matrix<unsigned char>& labels);
-        void compute_gradients_and_cost(
-                const Matrix<unsigned char>& images,
-                const Matrix<unsigned char>& labels,
-                Matrix<double>& gradient_1,
-                Matrix<double>& gradient_2,
-                double& cost);
-        unsigned int compute(const Example& e);
+    void train(
+        const unsigned int iterations,
+        const Matrix<unsigned char>& images,
+        const Matrix<unsigned char>& labels);
 
-        std::vector<double> sigmoid(const std::vector<double>& x);
-        std::vector<double> bent_identity(const std::vector<double>& x);
-        std::vector<double> sigmoid_prime(const std::vector<double>& x);
+    void compute_gradients_and_cost(
+        const Matrix<unsigned char>& images,
+        const Matrix<unsigned char>& labels,
+        Matrix<double>& gradient_1,
+        Matrix<double>& gradient_2,
+        double& cost);
+
+    unsigned int compute(const Example& e);
+
+    std::vector<double> sigmoid(const std::vector<double>& x);
+    std::vector<double> bent_identity(const std::vector<double>& x);
+    std::vector<double> sigmoid_prime(const std::vector<double>& x);
+
+    // Новая функция активации
+    std::vector<double> leaky_relu(const std::vector<double>& x, double alpha = 0.01);
+    std::vector<double> leaky_relu_prime(const std::vector<double>& x, double alpha = 0.01);
 };
 
-#include "NN.cpp"
+#include "NN.cpp" // Так и было
 
 #endif
