@@ -170,4 +170,4 @@ unsigned int NeuralNetwork::compute(const Example& e) {
 }
 
 std::vector<double> NeuralNetwork::sigmoid(const std::vector<double>& x) {
-    std::vector<double> result(x
+    std::vector<double> result(x)
