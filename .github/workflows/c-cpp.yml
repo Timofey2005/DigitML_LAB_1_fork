@@ -23,7 +23,7 @@ jobs:
       run: make 
     - name: run standart activate function
       run: ./main
-    - name: make bent_identity activate function
-      run: make bent_identity
-    - name: run bent_identity activate function
+    - name: make leaky_relu activate function
+      run: make leaky_relu
+    - name: run leaky_relu activate function
       run: ./main
