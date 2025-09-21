@@ -9,6 +9,9 @@ SRC = src/main.cpp
 sigmoid: 
 	g++ $(FLAGS) -Ofast $(SRC) -I include -o main
 
+leaky_relu:
+	g++ $(FLAGS) -DLEAKY_RELU -Ofast $(SRC) -I include -o main
+
 bent_identity:
 	g++ $(FLAGS) -DPERS -Ofast $(SRC) -I include -o main
 
@@ -19,4 +22,4 @@ all: sigmoid
 
 debug:
 	g++ $(FLAGS) -DDEBUG $(SRC) -o main
-	./main 
+	./main
