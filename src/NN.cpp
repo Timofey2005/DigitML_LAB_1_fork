@@ -138,15 +138,17 @@ void NeuralNetwork::compute_gradients_and_cost(
     cost += lambda/(2*m) * regularizationCost;
 }
 
-inline std::vector<double> NeuralNetwork::feed_forward(
-        const std::vector<double>& input,
-        const Matrix<double>& weights) {
+ inline std::vector<double> NeuralNetwork::feed_forward(
+         const std::vector<double>& input,
+         const Matrix<double>& weights) {
     #ifdef PERS
         return bent_identity(weights * input);
+    #elif defined LEAKY_RELU
+        return leaky_relu(weights * input);
     #else
         return sigmoid(weights * input);
     #endif
-}
+ }
 
 Matrix<double> NeuralNetwork::weight_init(double maxWeight, unsigned int rows, unsigned int cols){
     std::random_device rd;
