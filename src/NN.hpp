@@ -6,6 +6,8 @@
 #define HIDDEN_SIZE 15
 #define OUTPUT_SIZE 10
 
+#define LEAKY_RELU
+
 #include "../lib/matrix.h"
 #include "dataset.hpp"
 #include <cmath>
