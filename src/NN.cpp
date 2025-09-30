@@ -94,8 +94,17 @@ void NeuralNetwork::compute_gradients_and_cost(
 
         // Backpropagation
         const Matrix<double> d3(last_layer - vector_outcome);
-        const std::vector<double> ones2(HIDDEN_SIZE + 1, 1);
-        Matrix<double> d2((weights2.transpose() * d3).hadamard(Matrix<double>(hidden_layer)).hadamard(Matrix<double>(ones2 - hidden_layer)));
+        Matrix<double> d2;
+		#ifdef LEAKY_RELU
+	    d2 = (weights2.transpose() * d3)
+         .hadamard(Matrix<double>(leaky_relu_prime(hidden_layer)));
+		#else
+ 		   const std::vector<double> ones2(HIDDEN_SIZE + 1, 1);
+ 		   d2 = (weights2.transpose() * d3)
+		         .hadamard(Matrix<double>(hidden_layer))
+ 		         .hadamard(Matrix<double>(ones2 - hidden_layer));
+		#endif
+		
 
         gradient_2 += d3 * Matrix<double>(hidden_layer).transpose();
 
