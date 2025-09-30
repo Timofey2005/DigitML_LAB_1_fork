@@ -204,3 +204,25 @@ std::vector<double> NeuralNetwork::sigmoid_prime(const std::vector<double>& x) {
     }
     return result;
 }
+
+
+// Функция Leaky ReLU
+std::vector<double> NeuralNetwork::leaky_relu(const std::vector<double>& x) {
+    const double alpha = 0.01;
+    std::vector<double> result(x.size());
+    for (unsigned int i = 0; i < x.size(); ++i) {
+        result[i] = (x[i] >= 0.0) ? x[i] : alpha * x[i];
+    }
+    return result;
+}
+
+// Производная Leaky ReLU
+std::vector<double> NeuralNetwork::leaky_relu_prime(const std::vector<double>& x) {
+    const double alpha = 0.01;
+    std::vector<double> result(x.size());
+    for (unsigned int i = 0; i < x.size(); ++i) {
+        result[i] = (x[i] >= 0.0) ? 1.0 : alpha;
+    }
+    return result;
+}
+
