@@ -13,17 +13,26 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: installation
-      run: sudo apt install -y googletest libgtest-dev build-essential gcovr
-    - name: compill unit tests
-      run: make test
-    - name: run unit tests
+
+    - name: Install dependencies
+      run: sudo apt update && sudo apt install -y googletest libgtest-dev build-essential gcovr
+
+    - name: Compile & run unit tests
+      run: |
+        make test
+        ./main
+
+    - name: Build default (sigmoid)
+      run: make
+    - name: Run default (sigmoid)
       run: ./main
-    - name: make standart activate function
-      run: make 
-    - name: run standart activate function
-      run: ./main
-    - name: make bent_identity activate function
+
+    - name: Build bent_identity
       run: make bent_identity
-    - name: run bent_identity activate function
+    - name: Run bent_identity
+      run: ./main
+
+    - name: Build leaky_relu
+      run: make leaky_relu
+    - name: Run leaky_relu
       run: ./main
