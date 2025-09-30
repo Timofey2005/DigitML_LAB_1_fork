@@ -92,18 +92,22 @@ void NeuralNetwork::compute_gradients_and_cost(
         // unregularized part of the error for this training example
         cost += 1.0/m * (first_part - second_part);
 
-        // Backpropagation
+		// Backpropagation
         const Matrix<double> d3(last_layer - vector_outcome);
-        Matrix<double> d2;
+
 		#ifdef LEAKY_RELU
-	    d2 = (weights2.transpose() * d3)
+        Matrix<double> d2 = (weights2.transpose() * d3)
          .hadamard(Matrix<double>(leaky_relu_prime(hidden_layer)));
+		#elif defined RELU
+        Matrix<double> d2 = (weights2.transpose() * d3)
+         .hadamard(Matrix<double>(relu_prime(hidden_layer)));
 		#else
- 		   const std::vector<double> ones2(HIDDEN_SIZE + 1, 1);
- 		   d2 = (weights2.transpose() * d3)
-		         .hadamard(Matrix<double>(hidden_layer))
- 		         .hadamard(Matrix<double>(ones2 - hidden_layer));
+        const std::vector<double> ones2(HIDDEN_SIZE + 1, 1);
+        Matrix<double> d2 = (weights2.transpose() * d3)
+         .hadamard(Matrix<double>(hidden_layer))
+         .hadamard(Matrix<double>(ones2 - hidden_layer));
 		#endif
+
 		
 
         gradient_2 += d3 * Matrix<double>(hidden_layer).transpose();
@@ -218,7 +222,7 @@ std::vector<double> NeuralNetwork::sigmoid_prime(const std::vector<double>& x) {
 
 
 // Функция Leaky ReLU
-std::vector<double> NeuralNetwork::leaky_relu(const std::vector<double>& x) {
+std::vector<double> NeuralNetwork::leaky_relu(const std::vector<double>& x) const {
     const double alpha = 0.01;
     std::vector<double> result(x.size());
     for (unsigned int i = 0; i < x.size(); ++i) {
@@ -228,7 +232,7 @@ std::vector<double> NeuralNetwork::leaky_relu(const std::vector<double>& x) {
 }
 
 // Производная Leaky ReLU
-std::vector<double> NeuralNetwork::leaky_relu_prime(const std::vector<double>& x) {
+std::vector<double> NeuralNetwork::leaky_relu_prime(const std::vector<double>& x) const {
     const double alpha = 0.01;
     std::vector<double> result(x.size());
     for (unsigned int i = 0; i < x.size(); ++i) {
