@@ -72,6 +72,16 @@ TEST(FunctionTesting, test_sigmoid_comp) {
   EXPECT_TRUE(n.sigmoid(t1)>n.bent_identity(t1));
 }
 
+// Тест Leaky ReLU
+TEST(FunctionTesting, test_leaky_relu) {
+    std::vector<double> in = { -2.0, 0.0, 3.0 };
+    auto out = n.leaky_relu(in);
+    EXPECT_NEAR(out[0], -0.02, 1e-6);
+    EXPECT_NEAR(out[1],  0.00, 1e-6);
+    EXPECT_NEAR(out[2],  3.00, 1e-6);
+}
+
+
 #endif
 
 int main(int argc, char **argv) {
