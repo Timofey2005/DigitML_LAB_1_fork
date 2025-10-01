@@ -1,5 +1,8 @@
 # Ярослав Братовников КС-40
 
+[![Test Coverage](https://codecov.io/gh/Timofey2005/my-nn/branch/master/graph/badge.svg)](https://codecov.io/gh/Timofey2005/my-nn)
+
+
 # DigitML
 
 Training a feed-forward neural network with gradient descent and back-propogation to recognize handwritten digits. 
