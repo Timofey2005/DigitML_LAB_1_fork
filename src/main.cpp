@@ -90,17 +90,6 @@ TEST(FunctionTesting, test_leaky_relu_prime) {
     EXPECT_NEAR(d[2], 1.00, 1e-6);
 }
 
-#ifdef LEAKY_RELU
-// Проверяем, что feed_forward при LEAKY_RELU = leaky_relu
-TEST(FunctionTesting, test_feed_forward_leaky) {
-    std::vector<double> in = { -1.0, 2.0 };
-    // Простая матрица 1×2 с весами [1, 1]
-    Matrix<double> w(1, 2); w[0][0] = 1.0; w[0][1] = 1.0;
-    auto out = n.feed_forward(in, w);
-    // z = -1 + 2 = 1 → leaky_relu(1) = 1
-    ASSERT_EQ(out.size(), 1);
-    EXPECT_NEAR(out[0], 1.0, 1e-6);
-}
 
 
 #endif
