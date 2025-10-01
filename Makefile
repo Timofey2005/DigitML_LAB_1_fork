@@ -6,6 +6,17 @@ FLAGS = $(WARNINGS) -std=c++20
 
 SRC = src/main.cpp
 
+ifdef COVERAGE
+   FLAGS += -fprofile-arcs -ftest-coverage -O0 -g
+   LDFLAGS += --coverage
+endif
+
+# Цель для сборки тестов с покрытием
+test-coverage:
+    make clean
+    make test COVERAGE=1 LDFLAGS="$(LDFLAGS)"
+
+
 sigmoid: 
 	g++ $(FLAGS) -Ofast $(SRC) -I include -o main
 
